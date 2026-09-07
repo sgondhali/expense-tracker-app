@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker - Mobile + Laptop Sync</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>💰 Expense Tracker</h1>
+            <div class="header-actions">
+                <button id="syncBtn" class="btn btn-sync">🔄 Sync</button>
+                <button id="backupBtn" class="btn btn-backup">💾 Backup</button>
+                <button id="restoreBtn" class="btn btn-restore">📥 Restore</button>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="add">➕ Add</button>
+            <button class="tab-btn" data-tab="search">🔍 Search</button>
+            <button class="tab-btn" data-tab="summary">📊 Summary</button>
+            <button class="tab-btn" data-tab="export">📤 Export</button>
+        </nav>
+
+        <!-- Tab Content -->
+        <main class="tabs-content">
+            <!-- Add Transaction Tab -->
+            <section id="add" class="tab-content active">
+                <h2>Add New Transaction</h2>
+                <form id="transactionForm" class="form">
+                    <div class="form-group">
+                        <label for="vendor">Vendor / Particular</label>
+                        <input type="text" id="vendor" placeholder="e.g., Amazon, Flipkart" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cardPayment">Credit Card Amount (₹)</label>
+                        <input type="number" id="cardPayment" placeholder="2000" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="actualBill">Actual Bill (₹)</label>
+                        <input type="number" id="actualBill" placeholder="1200" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="markupAmount">Markup Amount (₹)</label>
+                        <input type="number" id="markupAmount" placeholder="800" step="0.01" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="markupPercent">Markup % </label>
+                        <input type="number" id="markupPercent" placeholder="66.67" step="0.01" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cardCharges">Card Charges (₹)</label>
+                        <input type="number" id="cardCharges" placeholder="0" step="0.01" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="netMarkup">Net Markup (₹)</label>
+                        <input type="number" id="netMarkup" placeholder="800" step="0.01" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentStatus">Payment Status</label>
+                        <select id="paymentStatus" required>
+                            <option value="Pending">Pending</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Partial">Partial</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">✅ Add Transaction</button>
+                </form>
+            </section>
+
+            <!-- Search Tab -->
+            <section id="search" class="tab-content">
+                <h2>Search Transactions</h2>
+                <div class="search-filters">
+                    <input type="text" id="searchVendor" placeholder="Search by vendor..." class="search-input">
+                    <input type="month" id="searchMonth" class="search-input">
+                    <button id="clearSearch" class="btn btn-secondary">Clear</button>
+                </div>
+                <div id="transactionsList" class="transactions-list"></div>
+            </section>
+
+            <!-- Summary Tab -->
+            <section id="summary" class="tab-content">
+                <h2>Monthly Summary</h2>
+                <div class="summary-filters">
+                    <input type="month" id="summaryMonth" class="search-input">
+                </div>
+                <div class="summary-cards">
+                    <div class="card summary-card">
+                        <h3>Total Card Payments</h3>
+                        <p class="amount" id="totalCardPayments">₹0</p>
+                    </div>
+                    <div class="card summary-card">
+                        <h3>Total Actual Bills</h3>
+                        <p class="amount" id="totalActualBills">₹0</p>
+                    </div>
+                    <div class="card summary-card">
+                        <h3>Total Markup</h3>
+                        <p class="amount" id="totalMarkup">₹0</p>
+                    </div>
+                    <div class="card summary-card">
+                        <h3>Total Card Charges</h3>
+                        <p class="amount" id="totalCardCharges">₹0</p>
+                    </div>
+                    <div class="card summary-card">
+                        <h3>Total Net Markup</h3>
+                        <p class="amount" id="totalNetMarkup">₹0</p>
+                    </div>
+                    <div class="card summary-card">
+                        <h3>Avg Markup %</h3>
+                        <p class="amount" id="avgMarkupPercent">0%</p>
+                    </div>
+                </div>
+                <div id="summaryDetails" class="summary-details"></div>
+            </section>
+
+            <!-- Export Tab -->
+            <section id="export" class="tab-content">
+                <h2>Export Data</h2>
+                <div class="export-buttons">
+                    <button id="exportCSV" class="btn btn-primary">📊 Export to CSV</button>
+                    <button id="exportExcel" class="btn btn-primary">📈 Export to Excel</button>
+                    <button id="exportJSON" class="btn btn-primary">💾 Export to JSON</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Hidden file input for restore -->
+    <input type="file" id="restoreFile" accept=".json" style="display: none;">
+
+    <script src="app.js"></script>
+</body>
+</html>
